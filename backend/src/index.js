@@ -47,6 +47,8 @@ const callContract = async () => {
 
     const wallet = new ethers.Wallet(privateKey, provider);
     const contractWithSigner  = await contract.connect(wallet);
+
+    // read write smart contract functions
     const val1 = await contractWithSigner.setGreeting("Hello Jason");
     const val2 = await contractWithSigner.greet();
     console.log(val2);
