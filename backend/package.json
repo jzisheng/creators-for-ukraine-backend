@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.5",
     "axios": "^0.26.0",
     "body-parser": "^1.19.2",
     "ethers": "^5.5.4",

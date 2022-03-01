@@ -1,12 +1,9 @@
-// import {ethers} from 'ethers'
-// import Greeter from '../../contract/artifacts/contracts/Greeter.sol/Greeter.json' assert {type: "json"};
-
-
 const express = require('express');
 const multer = require('multer');
 
 const app = express();
-const ethers = require('ethers');
+const { ethers } = require("ethers");
+// const hardhatEthers = require("@nomiclabs/hardhat-ethers");
 const axios = require('axios');
 const upload = multer({ dest: 'uploads/' });
 
@@ -17,9 +14,15 @@ const fs = require('fs');
 app.use(express.urlencoded({ extended: true }));
 
 /* smart contract */
+const privateKey = '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80';
 const contractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
-const clientAddress = '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266';
-// const contract = new ethers.Contract(contractAddress, Greeter.abi, clientAddress);
+const abi = [
+    "constructor(string memory _greeting)",
+    "function greet() public view returns (string memory)",
+    "function setGreeting(string memory _greeting) public "
+];
+const clientAddress = '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266'; // for testing
+
 
 /* variables. */
 
@@ -31,11 +34,26 @@ const pinataApiKey = keys['pinataApiKey'];
 const pinataSecretApiKey = keys['pinataSecretApiKey'];
 
 /* helper methods */
-const callContract = () => {
+
+
+const callContract = async () => {
+    console.log("callContract: ");
+
     // call smart contract
-    var provider = new ethers.providers.Web3Provider(clientAddress);
-    // var contract = new ethers.Contract(clientAddress, )
+    const rpcUrl = 'http://127.0.0.1:8545'
+    const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
+    
+    const contract = new ethers.Contract(contractAddress, abi, provider)
+
+    const wallet = new ethers.Wallet(privateKey, provider);
+    const contractWithSigner  = await contract.connect(wallet);
+    const val1 = await contractWithSigner.setGreeting("Hello Jason");
+    const val2 = await contractWithSigner.greet();
+    console.log(val2);
+
 }
+// for debugging:
+callContract();
 
 const postToPinata = (data) => {
     // post to pinata
@@ -73,7 +91,7 @@ const uploadToPinataAndCallContract = (address, filename) => {
     // call contract method
     callContract();
 
-    postToPinata(data);
+    // postToPinata(data);
 };
 
 
