@@ -19,7 +19,13 @@ async function main() {
 
   await greeter.deployed();
 
+  const YourContract = await hre.ethers.getContractFactory("YourContract");
+  const yourContract = await YourContract.deploy();
+
+  await yourContract.deployed();
+
   console.log("Greeter deployed to:", greeter.address);
+  console.log("yourContract deployed to:", yourContract.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
