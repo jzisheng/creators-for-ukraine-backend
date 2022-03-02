@@ -1,14 +1,12 @@
 # Hardhat Project
 
-Sample greeter contract
+To run the local JsonRPC server
+```
+npx hardhat node
+```
 
+And to deploy the `Greeter` and `ERC721` contracts onto the local JsonRPC
 
 ```
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
+npx hardhat run scripts/sample-script.js --network localhost
 ```
