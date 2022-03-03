@@ -1,4 +1,13 @@
 
+/* variables */
+let rawdata = fs.readFileSync('/Users/zisheng/secretKeys.json');
+let keys = JSON.parse(rawdata);
+
+const pinataUrl = keys['pinataUrl'];
+const pinataApiKey = keys['pinataApiKey'];
+const pinataSecretApiKey = keys['pinataSecretApiKey'];
+
+
 const postToPinata = (data) => {
     // post to pinata
     return axios.post(
