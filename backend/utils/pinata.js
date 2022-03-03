@@ -7,6 +7,9 @@ const pinataUrl = keys['pinataUrl'];
 const pinataApiKey = keys['pinataApiKey'];
 const pinataSecretApiKey = keys['pinataSecretApiKey'];
 
+const FormData = require('form-data');
+const fs = require('fs');
+
 
 const postToPinata = (data) => {
     // post to pinata
